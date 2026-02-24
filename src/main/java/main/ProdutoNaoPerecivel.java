@@ -1,6 +1,8 @@
+package main;
+
 public class ProdutoNaoPerecivel extends Produto {
 
-    ProdutoNaoPerecivel(String desc, double precoCusto, Double margemLucro) {
+    public ProdutoNaoPerecivel(String desc, double precoCusto, Double margemLucro) {
         super(desc, precoCusto, margemLucro);
     }
 

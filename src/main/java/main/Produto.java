@@ -1,3 +1,5 @@
+package main;
+
 import java.text.NumberFormat;
 
 public class Produto {
@@ -9,7 +11,7 @@ public class Produto {
 	
 	/**
      * Inicializador privado. Os valores default, em caso de erro, são:
-     * "Produto sem descrição", R$ 0.00, 0.0  
+     * "main.Produto sem descrição", R$ 0.00, 0.0
      * @param desc Descrição do produto (mínimo de 3 caracteres)
      * @param precoCusto Preço do produto (mínimo 0.01)
      * @param margemLucro Margem de lucro (mínimo 0.01)
@@ -26,7 +28,7 @@ public class Produto {
 	
 	/**
      * Construtor completo. Os valores default, em caso de erro, são:
-     * "Produto sem descrição", R$ 0.00, 0.0  
+     * "main.Produto sem descrição", R$ 0.00, 0.0
      * @param desc Descrição do produto (mínimo de 3 caracteres)
      * @param precoCusto Preço do produto (mínimo 0.01)
      * @param margemLucro Margem de lucro (mínimo 0.01)
@@ -38,7 +40,7 @@ public class Produto {
 	/**
      * Construtor sem margem de lucro - fica considerado o valor padrão de margem de lucro.
      * Os valores default, em caso de erro, são:
-     * "Produto sem descrição", R$ 0.00 
+     * "main.Produto sem descrição", R$ 0.00
      * @param desc Descrição do produto (mínimo de 3 caracteres)
      * @param precoCusto Preço do produto (mínimo 0.01)
      */

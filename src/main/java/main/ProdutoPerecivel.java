@@ -1,3 +1,5 @@
+package main;
+
 import java.time.LocalDate;
 
 public class ProdutoPerecivel extends Produto {
@@ -6,7 +8,7 @@ public class ProdutoPerecivel extends Produto {
     private static final int PRAZO_DESCONTO = 7;
     private LocalDate dataDeValidade;
 
-    ProdutoPerecivel(String desc, double precoCusto, Double margemLucro, LocalDate validade) {
+    public ProdutoPerecivel(String desc, double precoCusto, Double margemLucro, LocalDate validade) {
         super(desc, precoCusto, margemLucro);
         this.dataDeValidade = validade;
     }
