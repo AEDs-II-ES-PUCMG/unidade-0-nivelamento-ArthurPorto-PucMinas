@@ -5,14 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import main.Produto;
+import main.ProdutoPerecivel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ProdutoPerecivelTest {
-    
 
     Produto produto;
-        
     
     @BeforeEach
     public void prepare(){
@@ -21,18 +21,18 @@ public class ProdutoPerecivelTest {
     
     @Test
     public void calculaPrecoSemDescontoCorretamente(){
-        assertEquals(110.0, produto.valorDeVenda(), 0.01);
+        assertEquals(110.0, produto.valorVenda(), 0.01);
     }
     
     @Test
     public void calculaPrecoComDescontoCorretamente(){
         produto = new ProdutoPerecivel("Perecível teste", 100, 0.1, LocalDate.now().plusDays(2));
-        assertEquals(110.0 * 0.75, produto.valorDeVenda(), 0.01);
+        assertEquals(110.0 * 0.75, produto.valorVenda(), 0.01);
     }
     
     @Test
     public void naoCriaProdutoForaDaValidade(){
-        assertThrows(IllegalArgumentException.class, () -> new ProdutoPerecivel("teste", 5, 1, LocalDate.now().minusDays(2)));
+        assertThrows(IllegalArgumentException.class, () -> new ProdutoPerecivel("teste", 5, 1.0, LocalDate.now().minusDays(2)));
     }
 
     @Test

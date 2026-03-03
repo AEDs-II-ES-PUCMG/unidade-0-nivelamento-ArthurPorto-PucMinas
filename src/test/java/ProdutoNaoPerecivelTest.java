@@ -1,11 +1,9 @@
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import main.Produto;
 import main.ProdutoNaoPerecivel;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,20 +35,19 @@ public class ProdutoNaoPerecivelTest {
     
     @Test
     public void naoCriaProdutoComMargemNegativa(){
-        assertThrows(IllegalArgumentException.class, () -> new ProdutoNaoPerecivel("teste", 5, -1));
+        assertThrows(IllegalArgumentException.class, () -> new ProdutoNaoPerecivel("teste", 5, -1.0));
     }
 
     @Test
     public void criarCorretamenteAPartirDeTexto(){
-//        String linhaDados = "1;Produto do arquivo;10.0;0.1";
-//        produto = Produto.criarDoTexto(linhaDados);
-//        String desc = produto.toString();
-//        assertTrue(desc.contains("Produto do arquivo") && desc.contains("R$ 11,00"));
+        String linhaDados = "1;Produto do arquivo;10.0;0.1";
+        produto = Produto.criarDoTexto(linhaDados);
+        String desc = produto.toString();
+        assertTrue(desc.contains("Produto do arquivo") && desc.contains("R$ 11,00"));
     }
 
     @Test
     public void criaDadosEmTextoCorretamente(){
-//        assertEquals("1;Produto teste;100.00;0.10", produto.gerarDadosTexto());
-        
+        assertEquals("1;Produto teste;100.00;0.10", produto.gerarDadosTexto());
     }
 }
