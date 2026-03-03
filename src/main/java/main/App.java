@@ -1,6 +1,10 @@
 package main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class App {
@@ -54,8 +58,71 @@ public class App {
      * @return Um vetor com os produtos carregados, ou vazio em caso de problemas de leitura.
      */
     static Produto[] lerProdutos(String nomeArquivoDados) {
+        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Produto[] vetorProdutos = new Produto[0];
-        //TO DO
+
+        try (Scanner leitor = new Scanner(new File(nomeArquivoDados), Charset.forName("ISO-8859-2"))) {
+            if (!leitor.hasNextLine()) {
+                quantosProdutos = 0;
+                return new Produto[MAX_NOVOS_PRODUTOS];
+            }
+
+            int quantidadeNoArquivo = Integer.parseInt(leitor.nextLine().trim());
+            if (quantidadeNoArquivo < 0) {
+                throw new IllegalArgumentException("Quantidade de produtos inválida no arquivo.");
+            }
+
+            vetorProdutos = new Produto[quantidadeNoArquivo + MAX_NOVOS_PRODUTOS];
+            int indice = 0;
+
+            while (leitor.hasNextLine() && indice < quantidadeNoArquivo) {
+                String linha = leitor.nextLine().trim();
+                if (linha.isEmpty()) {
+                    continue;
+                }
+
+                String[] dados = linha.split(";");
+                if (dados.length < 4) {
+                    throw new IllegalArgumentException("Linha de produto com formato inválido: " + linha);
+                }
+
+                for (int i = 0; i < dados.length; i++) {
+                    dados[i] = dados[i].trim();
+                }
+
+                String tipo = dados[0];
+                String descricao = dados[1];
+                double precoCusto = Double.parseDouble(dados[2].replace(',', '.'));
+                double margemLucro = Double.parseDouble(dados[3].replace(',', '.'));
+
+                if (tipo.equals("1") || tipo.equalsIgnoreCase("N")) {
+                    vetorProdutos[indice] = new ProdutoNaoPerecivel(descricao, precoCusto, margemLucro);
+                } else if (tipo.equals("2") || tipo.equalsIgnoreCase("P")) {
+                    if (dados.length < 5) {
+                        throw new IllegalArgumentException("Produto perecível sem data de validade: " + linha);
+                    }
+                    LocalDate validade = LocalDate.parse(dados[4], formatoData);
+                    vetorProdutos[indice] = new ProdutoPerecivel(descricao, precoCusto, margemLucro, validade);
+                } else {
+                    throw new IllegalArgumentException("Tipo de produto inválido: " + tipo);
+                }
+
+                indice++;
+            }
+
+            if (indice != quantidadeNoArquivo) {
+                throw new IllegalArgumentException("Quantidade de linhas de produtos diferente da informada no arquivo.");
+            }
+
+            quantosProdutos = indice;
+            return vetorProdutos;
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo de dados não encontrado: " + nomeArquivoDados);
+        } catch (Exception e) {
+            System.out.println("Erro ao ler arquivo de dados: " + e.getMessage());
+        }
+
+        quantosProdutos = 0;
         return vetorProdutos;
     }
 
