@@ -1,6 +1,8 @@
 package main;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class ProdutoPerecivel extends Produto {
 
@@ -21,5 +23,17 @@ public class ProdutoPerecivel extends Produto {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    /**
+     * Gera a linha de persistência para produto perecível no formato:
+     * {@code 2;descricao;precoCusto;margemLucro;dd/MM/yyyy}.
+     *
+     * @return dados do produto formatados para arquivo texto
+     */
+    @Override
+    public String gerarDadosText() {
+        String dataFormatada = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(dataDeValidade);
+        return String.format(Locale.US, "2;%s;%.2f;%.2f;%s", getDescricao(), precoCusto, margemLucro, dataFormatada);
     }
 }
